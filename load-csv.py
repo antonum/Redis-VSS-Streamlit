@@ -1,4 +1,5 @@
 import csv
+import os
 from redis import Redis
 import numpy as np
 from sentence_transformers import SentenceTransformer
