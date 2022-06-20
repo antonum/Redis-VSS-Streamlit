@@ -21,7 +21,23 @@ def get_model():
 
 model = get_model()
 st.title("Redis Vector Similarity Search")
+body="""
+## Vector Similatity Search vs. Full Text Search
 
+This demo allows ou to search the database of approx. 12k tweets using either traditional 
+Full Text Search approach or Vector Similarity Search via vector embedings.
+
+Here we are using `SentenceTransformer('sentence-transformers/all-distilroberta-v1')` vector transformer 
+with COSINE similarity. Unlike full text search - vector embedding is capable of matching texts that are
+has similar meaning or theme, but not nessesarily using the same words.
+
+To see the difference, try different combination of the search terms and switch between Full Text and VSS mode. For instance:
+
+- apple down
+- oil reserves
+"""
+with st.expander('About this demo:', expanded=False):
+    st.markdown(body)
 user_query = st.text_input("Query:", 'apple slowdown')
 print("search string:"+user_query)
 index_type = st.radio(
