@@ -37,8 +37,79 @@ if index_type=='VSS':
     res = redis.ft("tweet:idx").search(q, query_params={"vector": query_vector})
     #df=pd.json_normalize(res['docs'])
     df = pd.DataFrame([t.__dict__ for t in res.docs ]).drop(columns=["payload"])
+    body="""
+    **Index creation:**
+    ```python
+    indexDefinition = IndexDefinition(
+        prefix=["tweet:"],
+        index_type=IndexType.HASH,
+    )
+
+    number_of_vectors=12000
+    redis.ft("tweet:idx").create_index(
+        (
+            VectorField("text_embeddings", "FLAT", {  "TYPE": "FLOAT32", 
+                                                    "DIM": 768, 
+                                                    "DISTANCE_METRIC": "COSINE",
+                                                    "INITIAL_CAP": number_of_vectors, 
+                                                    "BLOCK_SIZE": number_of_vectors
+                                                    })
+        ),
+        definition=indexDefinition
+    )
+    ```
+    **Insert Data:**
+    ```python
+    model = SentenceTransformer('sentence-transformers/all-distilroberta-v1')
+
+    keyname = "tweet:{}".format(id)
+    tweethash["text"]=text
+    tweethash["text_embeddings"] = model.encode(text).astype(np.float32).tobytes()
+    redis.hset(keyname, mapping=tweethash)
+    ```
+    **Query:**
+    ```python
+    query_vector=model.encode(user_query).astype(np.float32).tobytes()
+
+    q = Query("*=>[KNN 10 @text_embeddings $vector AS result_score]")
+        .return_fields("result_score","text")
+        .dialect(2)
+        .sort_by("result_score", True)
+    res = redis.ft("tweet:idx").search(q, query_params={"vector": query_vector})
+    ```
+    """
+    with st.expander('Code example', expanded=False):
+        st.markdown(body)
     st.table(df)
 if index_type=='Full Text':
+    body="""
+    **Index creation:**
+    ```python
+    indexDefinition = IndexDefinition(
+        prefix=["tweet:"],
+        index_type=IndexType.HASH,
+    )
+
+    redis.ft("tweet:idx").create_index(
+        (
+         TextField("text", no_stem=True, sortable=True),
+        ),
+        definition=indexDefinition
+    )
+    ```
+    **Insert Data:**
+    ```python
+    keyname = "tweet:{}".format(id)
+    tweethash["text"]=text
+    redis.hset(keyname, mapping=tweethash)
+    ```
+    **Query:**
+    ```python
+    res = redis.ft("tweet:idx").search("@text:"+user_query)
+    ```
+    """
+    with st.expander('Code example', expanded=False):
+        st.markdown(body)
     res = redis.ft("tweet:idx").search("@text:"+user_query)
     #res
     #df=pd.json_normalize(res['docs'])
