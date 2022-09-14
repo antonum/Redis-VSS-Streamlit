@@ -28,7 +28,7 @@ This demo allows ou to search the database of approx. 12k tweets using either tr
 Full Text Search approach or Vector Similarity Search via vector embedings.
 
 Here we are using `SentenceTransformer('sentence-transformers/all-distilroberta-v1')` vector transformer 
-with COSINE similarity. Unlike full text search - vector embedding is capable of matching texts that are
+with COSINE similarity. Unlike full text search - vector embedding is capable of matching texts that 
 has similar meaning or theme, but not nessesarily using the same words.
 
 To see the difference, try different combination of the search terms and switch between Full Text and VSS mode. For instance:

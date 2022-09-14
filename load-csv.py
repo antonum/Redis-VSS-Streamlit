@@ -1,3 +1,4 @@
+import streamlit as st #used here just for secrets
 import csv
 import os
 from redis import Redis
@@ -12,11 +13,12 @@ from redis.commands.search.field import (
 )
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 
-host = os.getenv('REDIS_HOST', default = "localhost")
-port = os.getenv('REDIS_PORT', default = 7000)
+host = os.getenv('REDIS_HOST', default = 'localhost')
+port = os.getenv('REDIS_PORT', default = 6379)
 pwd = os.getenv('REDIS_PWD', default = '') 
 
 redis = Redis(host=host, port=port, password=pwd)
+#redis = Redis(host='redis-10688.c73.us-east-1-2.ec2.cloud.redislabs.com', port=10688, password='E0wIuvKswurEcRmzXonkQ93vm1T9SPN5')
 redis.flushdb()
 
 # Load the machine learning model
