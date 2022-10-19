@@ -130,3 +130,4 @@ dmypy.json
 .streamlit/secrets.toml
 load-csv.py
 
+notes.txt
