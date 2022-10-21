@@ -21,6 +21,10 @@ Variant of BERT model sentence-transformers/all-distilroberta-v1 from Hugging Fa
 
 Vectors are generated and loaded into Redis at the Notebook. Source code for ColabNotebook can be found here: [a vector_embeddings_redis.ipynb](vector_embeddings_redis.ipynb)
 
+![cloab notebook](notebook.png)
+
+Click on the "open in cloab" icon to run it.
+
 Same notebook allows you to perform both lexical full-text queries and VSS-based symantic queries. Query frontend is avaliable [online](https://antonum-redis-vss-streamlit-streamlit-app-p4z5th.streamlitapp.com/) and the source code is at [streamlit_app.py](streamlit_app.py)
 
 ## Prerequisites
@@ -31,7 +35,7 @@ In order to successfully launch the notebook you need either Redis Cloud subscri
 
 Create Free Redis Cloud subscription. https://redis.com/try-free/
 
-You can start with free forever 30MB Fixed subscription.
+You can start with free forever 30MB Fixed subscription. Make sure you select Redis Stack as a Type. 
 
 After subscription is created - Capture:
 - “Public Endpoint” 
@@ -84,3 +88,4 @@ Or to run it natively on Mac, including Mac silicone M1/M2:
 brew tap redis-stack/redis-stack
 brew install redis-stack
 ```
+
