@@ -29,7 +29,7 @@ Same notebook allows you to perform both lexical full-text queries and VSS-based
 
 ## Prerequisites
 
-In order to successfully launch the notebook you need either Redis Cloud subscription or Redis Stack deployed locally.
+In order to successfully launch the notebook you need either Redis Cloud subscription or Redis Stack deployed locally. Notebook by default would install and use notebook-local Redis Stack instance.
 
 ### Redis Cloud
 
@@ -50,30 +50,7 @@ port = 18900
 pwd="sDv0puwA3oMXNBe3e8gdcBQtYXXXXX"
 ```
 
-### Start Redis Stack in colab locally in the colab
-
-Add the following code block into Colab Notebook:
-
-```
-%%sh
-curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
-sudo apt-get update
-sudo apt-get install redis-stack-server
-redis-stack-server --daemonize yes
-```
-Then your connection string would look like:
-
-```
-# make sure to enter your values here!!!
-host = "localhost"
-port = 6397
-pwd=""
-```
-
-That would allow to run the entire notebook, but you would not be able to run the Streamlit frontend.
-
-### Running notebook and Streamlit app locally with Redis Stack
+### Running Redis Stack Locally
 
 Install redis stack locally. Follow the instructions here: https://redis.io/docs/stack/get-started/install/
 
@@ -89,3 +66,16 @@ brew tap redis-stack/redis-stack
 brew install redis-stack
 ```
 
+### Running Streamlit app locally
+
+Install dependencies:
+```
+pip install -r requirements.txt
+pip install streamlit
+```
+
+Run Streamlit app:
+```
+streamlit run streamlit_app.py
+```
+To specify custom Redis URL/PAssword - use create `.streamlit/secrets.toml` from `.streamlit/secrets.toml.template` and replace values with your own.
