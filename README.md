@@ -4,7 +4,7 @@
 
 Try always-on Streamlit app that contains the front-end for the project:
 
-https://antonum-redis-vss-streamlit-streamlit-app-p4z5th.streamlitapp.com/
+https://antonum-redis-vss-streamlit-streamlit-app-p4z5th.streamlit.app/
 
 ![streamlit app](steamlit-app.png)
 
